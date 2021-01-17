@@ -1,5 +1,5 @@
 from django.db import models
-from apps.game.models.game_dependencies import Genres, Languages, Platform
+from game.models.game_dependencies import Genres, Languages, Platform
 
 class Game(models.Model):
 
