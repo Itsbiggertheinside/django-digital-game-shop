@@ -1,5 +1,5 @@
 from django.db import models
-from game.models.game_dependencies import Genres, Languages, Platform
+from game.models.game_dependencies import *
 
 class Game(models.Model):
 
@@ -12,8 +12,8 @@ class Game(models.Model):
     requirements_recommended = models.TextField()
 
     # dependencies
-    genres = models.ManyToManyField(Genres)
-    languages = models.ManyToManyField(Languages)
+    genres = models.ManyToManyField(Genre)
+    languages = models.ManyToManyField(Language)
     platform = models.ManyToManyField(Platform)
 
 
