@@ -15,6 +15,7 @@ class Game(models.Model):
 
     on_sale = models.BooleanField(default=True)
     pre_order = models.BooleanField(default=False)
+    stock = models.PositiveIntegerField()
 
     # dependencies
     genres = models.ManyToManyField(Genre)
