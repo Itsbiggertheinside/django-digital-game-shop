@@ -401,3 +401,11 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block script %}
+        <script>
+            {% for obj in queryset %}
+                console.log({{ obj.ratings.objects.all }});
+            {% endfor %}
+        </script>
+{% endblock script %}

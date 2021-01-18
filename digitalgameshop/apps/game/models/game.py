@@ -1,5 +1,6 @@
 from django.db import models
 from .game_dependencies import Genre, Language, Platform
+from .ratings import GameRatings
 
 
 class Game(models.Model):
@@ -30,6 +31,14 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
+
+    # def save(self, *args, **kwargs):
+    #     if not :
+    #         rating = GameRatings(game=self.pk, likes=0, comments=0, wisheds=0)
+    #         rating.save()
+    #         super(Game, self).save(*args, **kwargs)
+        
+    #     super().save(*args, **kwargs)
 
 
     class Meta:
