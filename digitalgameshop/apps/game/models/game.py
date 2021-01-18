@@ -1,11 +1,10 @@
 from django.db import models
-from .game_dependencies import Genre, Language, Platform
-from user.models import Account
+from . import Genre, Language, Platform
 
 
 class Game(models.Model):
 
-    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='oyunlar')
+    user = models.ForeignKey('user.Account', on_delete=models.CASCADE, related_name='oyunlar')
 
     name = models.CharField(max_length=35)
     price = models.PositiveSmallIntegerField()

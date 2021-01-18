@@ -1,5 +1,5 @@
 from django.db import models
-from .game import Game
+from . import Game
 from uuid import uuid4
 
 
