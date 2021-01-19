@@ -97,6 +97,7 @@
         <!-- carousel -->
 		<div class="owl-carousel section__carousel section__carousel--catalog" id="carousel1">
 			<!-- card -->
+            {% for latest_game in latest_released_games %}
 			<div class="card">
 				<a href="details.html" class="card__cover">
 					<img src="img/cards/5.jpg" alt="">
@@ -110,8 +111,8 @@
 				</ul>
 
 				<div class="card__title">
-					<h3><a href="details.html">Desperados III Digital Deluxe Edition</a></h3>
-					<span>$49.00</span>
+					<h3><a href="details.html">{{ latest_game.name }}</a></h3>
+					<span>${{ latest_game.price }}</span>
 				</div>
 
 				<div class="card__actions">
@@ -122,6 +123,7 @@
 					</button>
 				</div>
 			</div>
+            {% endfor %}
 			<!-- end card -->
         </div>
     <!-- end carousel -->
@@ -401,11 +403,3 @@
     </div>
 </div>
 {% endblock content %}
-
-{% block script %}
-        <script>
-            {% for obj in queryset %}
-                console.log({{ obj.ratings.likes }});
-            {% endfor %}
-        </script>
-{% endblock script %}
