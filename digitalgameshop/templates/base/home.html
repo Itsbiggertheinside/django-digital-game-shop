@@ -405,7 +405,7 @@
 {% block script %}
         <script>
             {% for obj in queryset %}
-                console.log({{ obj.ratings.objects.all }});
+                console.log({{ obj.ratings.likes }});
             {% endfor %}
         </script>
 {% endblock script %}
