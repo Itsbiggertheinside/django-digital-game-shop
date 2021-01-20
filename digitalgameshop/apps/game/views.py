@@ -5,8 +5,7 @@ from .models.helpers import GameListViewHelper
 
 # Create your views here.
 class GameHomeView(ListView):
-    model = Game
-    queryset = GameListViewHelper(model)
+    queryset = GameListViewHelper(Game)
     template_name = 'base/home.html'
 
     def get_context_data(self, **kwargs):
@@ -18,4 +17,11 @@ class GameHomeView(ListView):
         return context
     
 class GameDetailView(DetailView):
-    pass
+    model = Game
+    template_name = 'base/detail.html'
+    context_object_name = 'game_detail'
+
+    def get_context_data(self, **kwargs):
+        context = super(GameDetailView, self).get_context_data(**kwargs)
+        context['images'] = GameImage.objects.select_related('game').filter(game=self.get_object())
+        return context
