@@ -3,7 +3,7 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 from uuid import uuid4
 from .game_dependencies import Genre, Language, Platform
-from .helpers import MediaDirectory
+from .upload_to import MediaDirectory
 
 class Game(models.Model):
     md = MediaDirectory()

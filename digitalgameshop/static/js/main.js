@@ -342,12 +342,12 @@ $(document).ready(function () {
 			var firstSlider = document.getElementById('filter__range');
 			noUiSlider.create(firstSlider, {
 				range: {
-					'min': 9,
-					'max': 99
+					'min': 3,
+					'max': 993,
 				},
 				step: 1,
 				connect: true,
-				start: [18, 56],
+				start: [18, 127],
 				format: wNumb({
 					decimals: 0,
 					prefix: '₺'

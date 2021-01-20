@@ -1,5 +1,5 @@
 from django.db import models
-from .helpers import MediaDirectory
+from .upload_to import MediaDirectory
 
 class GameImage(models.Model):
     md = MediaDirectory()
