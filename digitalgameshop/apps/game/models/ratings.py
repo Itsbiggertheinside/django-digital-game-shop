@@ -4,9 +4,9 @@ from django.dispatch import receiver
 
 class GameRatings(models.Model):
     game = models.OneToOneField('game.Game', on_delete=models.CASCADE, primary_key=True, related_name='ratings')
-    likes = models.JSONField(default='{}')
-    comments = models.JSONField(default='{}')
-    wisheds = models.JSONField(default='{}')
+    likes = models.JSONField(default=dict)
+    comments = models.JSONField(default=dict)
+    wisheds = models.JSONField(default=dict)
 
     def __str__(self):
         return str(self.game)
