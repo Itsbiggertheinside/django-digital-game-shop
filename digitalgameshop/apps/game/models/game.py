@@ -1,8 +1,9 @@
 from django.db import models
 from .game_dependencies import Genre, Language, Platform
-
+from .helpers import MediaDirectory
 
 class Game(models.Model):
+    md = MediaDirectory()
 
     user = models.ForeignKey('user.Account', on_delete=models.CASCADE, related_name='oyunlar')
 
@@ -12,6 +13,7 @@ class Game(models.Model):
     description = models.TextField()
     release_date = models.DateField(null=True, blank=True)
 
+    banner = models.ImageField(upload_to=md.upload_banner)
     requirements_minimum = models.TextField(null=True, blank=True)
     requirements_recommended = models.TextField(null=True, blank=True)
 

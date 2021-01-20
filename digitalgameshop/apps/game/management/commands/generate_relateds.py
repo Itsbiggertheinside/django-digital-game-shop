@@ -3,9 +3,12 @@ from game.models.game_dependencies import Genre, Language, Platform
 
 class Command(BaseCommand):
 
-    def dependencyInjection(self, model, list):
+    def injection(self, model, list):
         for item in list:
             model.objects.create(name=item)
+
+    def itemRemover(self, model):
+        model.objects.all().delete()
 
     def handle(self, *args, **options):
         
@@ -17,9 +20,15 @@ class Command(BaseCommand):
         platform = ['PC', 'Playstation', 'XBox', 'Mobil']
 
 
-        self.dependencyInjection(Genre, genres)
-        self.dependencyInjection(Language, languages)
-        self.dependencyInjection(Platform, genres)
+        # delete data
+        self.itemRemover(Genre)
+        self.itemRemover(Language)
+        self.itemRemover(Platform)
+
+        # refill data
+        self.injection(Genre, genres)
+        self.injection(Language, languages)
+        self.injection(Platform, platform)
 
 
     
