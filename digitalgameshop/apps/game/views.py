@@ -4,18 +4,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Game, GameImage
 
 
+#-----------------------------------------------------------------------------------------------------------------
 class GameListViewHelper():
-
-    queryset = Game.objects.select_related('user').prefetch_related('genres', 'languages', 'platform').all()
-
+    queryset = Game.objects.select_related('user').prefetch_related('genres', 'languages', 'platform', 'favourites').all()
     def get_top_games(self):
         pass
-
     def get_latest_released_games(self):
         return self.queryset.filter(pre_order=False).order_by('-release_date')[:10]
-
     def get_pre_ordered_games(self):
         return self.queryset.filter(pre_order=True).order_by('-release_date')[:10]
+#-----------------------------------------------------------------------------------------------------------------
+
 
 
 # Create your views here.
@@ -31,6 +30,7 @@ class GameHomeView(ListView):
         context['pre_ordered_games'] = self.queryset.get_pre_ordered_games()
         return context
     
+
 class GameDetailView(DetailView):
     model = Game
     template_name = 'base/detail.html'
@@ -41,6 +41,11 @@ class GameDetailView(DetailView):
         context['images'] = GameImage.objects.select_related('game').filter(game=self.get_object())
         return context
 
+
 class GameFavoritesView(LoginRequiredMixin, ListView):
     model = Game
     template_name = 'base/favorites.html'
+
+
+def add_favourite(request):
+    pass

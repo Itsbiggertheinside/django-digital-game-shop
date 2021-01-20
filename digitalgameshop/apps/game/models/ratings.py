@@ -6,7 +6,7 @@ class GameRatings(models.Model):
     game = models.OneToOneField('game.Game', on_delete=models.CASCADE, primary_key=True, related_name='ratings')
     likes = models.JSONField(default=dict)
     comments = models.JSONField(default=dict)
-    wisheds = models.JSONField(default=dict)
+    favorites = models.JSONField(default=dict)
 
     def __str__(self):
         return str(self.game)
@@ -15,5 +15,5 @@ class GameRatings(models.Model):
         pass
     def get_comment_count(self):
         pass
-    def get_wished_count(self):
+    def get_favorite_count(self):
         pass

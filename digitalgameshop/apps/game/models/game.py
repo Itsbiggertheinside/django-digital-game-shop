@@ -4,11 +4,12 @@ from django.utils.text import slugify
 from uuid import uuid4
 from .game_dependencies import Genre, Language, Platform
 from .upload_to import MediaDirectory
+from user.models.profile import Account
 
 class Game(models.Model):
     md = MediaDirectory()
 
-    user = models.ForeignKey('user.Account', on_delete=models.CASCADE, related_name='oyunlar')
+    user = models.ForeignKey('user.Account', on_delete=models.CASCADE, related_name='oyunlar', related_query_name='oyun')
 
     name = models.CharField(max_length=35)
     price = models.PositiveSmallIntegerField()
@@ -28,6 +29,7 @@ class Game(models.Model):
     genres = models.ManyToManyField(Genre)
     languages = models.ManyToManyField(Language)
     platform = models.ManyToManyField(Platform)
+    favourites = models.ManyToManyField(Account, related_name='favourites', blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
