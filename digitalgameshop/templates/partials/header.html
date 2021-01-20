@@ -12,14 +12,14 @@
 								<span></span>
 							</button>
 
-							<a href="index.html" class="header__logo">
+							<a href="{% url 'game:home' %}" class="header__logo">
 								<img src="{% static 'img/icon/favicon-32x32.png' %}" alt="">
 								<span>Dijital Market</span>
 							</a>
 
 							<ul class="header__nav">
 								<li class="header__nav-item">
-									<a class="header__nav-link" href="index.html">ANA SAYFA</a>
+									<a class="header__nav-link" href="{% url 'game:home' %}">ANA SAYFA</a>
 								</li>
 								<li class="header__nav-item">
 									<a class="header__nav-link" href="#" role="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">KATALOG <svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewbox='0 0 512 512'><path fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 184l144 144 144-144'></path></svg></a>
