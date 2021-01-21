@@ -67,3 +67,11 @@ def remove_favourite(request, slug):
     game = get_object_or_404(Game, slug=slug)
     game.favourites.remove(request.user.id)
     return redirect('game:favourites')
+
+@login_required
+def add_checkout(request, slug):
+    pass
+
+@login_required
+def remove_checkout(request, slug):
+    pass
