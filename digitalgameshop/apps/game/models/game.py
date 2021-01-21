@@ -29,6 +29,8 @@ class Game(models.Model):
     genres = models.ManyToManyField(Genre)
     languages = models.ManyToManyField(Language)
     platform = models.ManyToManyField(Platform)
+
+    # special
     favourites = models.ManyToManyField(Account, related_name='favourites', blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,6 +48,12 @@ class Game(models.Model):
 
     def get_absolute_url(self):
         return reverse('game:detail', kwargs={'slug': self.slug})
+
+    def add_favourite_url(self):
+        return reverse('game:add-favourite', kwargs={'slug': self.slug})
+    
+    def remove_favourite_url(self):
+        return reverse('game:remove-favourite', kwargs={'slug': self.slug})
 
     def create_unique_slug(self):
         letter_fix = slugify(self.name.replace('ı', 'i'))

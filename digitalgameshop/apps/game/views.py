@@ -1,12 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .models import Game, GameImage
+from user.models.profile import Account
+from django.http import HttpResponseRedirect
+
 
 
 #-----------------------------------------------------------------------------------------------------------------
-class GameListViewHelper():
-    queryset = Game.objects.select_related('user').prefetch_related('genres', 'languages', 'platform', 'favourites').all()
+class QueryHelper():
+    queryset = Game.objects.select_related('user').prefetch_related('genres', 'languages', 'platform', 'favourites')
     def get_top_games(self):
         pass
     def get_latest_released_games(self):
@@ -19,7 +23,7 @@ class GameListViewHelper():
 
 # Create your views here.
 class GameHomeView(ListView):
-    queryset = GameListViewHelper()
+    queryset = QueryHelper()
     template_name = 'base/home.html'
 
     def get_context_data(self, **kwargs):
@@ -43,9 +47,23 @@ class GameDetailView(DetailView):
 
 
 class GameFavoritesView(LoginRequiredMixin, ListView):
-    model = Game
-    template_name = 'base/favorites.html'
+    template_name = 'base/favourites.html'
+    context_object_name = 'game_favourites'
+
+    def get_queryset(self):
+        queryset = QueryHelper().queryset
+        favourited_games_by_user = queryset.filter(favourites__id=self.request.user.id)
+        return favourited_games_by_user
 
 
-def add_favourite(request):
-    pass
+@login_required
+def add_favourite(request, slug):
+    game = get_object_or_404(Game, slug=slug)
+    game.favourites.add(request.user.id)
+    return HttpResponseRedirect(game.get_absolute_url())
+
+@login_required
+def remove_favourite(request, slug):
+    game = get_object_or_404(Game, slug=slug)
+    game.favourites.remove(request.user.id)
+    return redirect('game:favourites')

@@ -55,7 +55,7 @@
 
 									<ul class="dropdown-menu header__nav-menu header__nav-menu--scroll" aria-labelledby="dropdownMenu3">
 										<li><a href="checkout.html">Sepetim</a></li>
-										<li><a href="{% url 'game:favorites' %}">Favorilerim</a></li>
+										<li><a href="{% url 'game:favourites' %}">Favorilerim</a></li>
 										<li><a href="about.html">Hakkımızda</a></li>
 										<li><a href="profile.html">Profil</a></li>
 										<li><a href="signin.html">Giriş Yap</a></li>
@@ -109,7 +109,7 @@
 							</form>
 
 							<div class="header__actions header__actions--2">
-								<a href="favorites.html" class="header__link">
+								<a href="{% url 'game:favourites' %}" class="header__link">
 									<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><path d='M352.92,80C288,80,256,144,256,144s-32-64-96.92-64C106.32,80,64.54,124.14,64,176.81c-1.1,109.33,86.73,187.08,183,252.42a16,16,0,0,0,18,0c96.26-65.34,184.09-143.09,183-252.42C447.46,124.14,405.68,80,352.92,80Z' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></path></svg>
 									<span>Favoriler</span>
 								</a>
