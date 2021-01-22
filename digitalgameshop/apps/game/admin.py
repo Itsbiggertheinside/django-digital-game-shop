@@ -12,5 +12,6 @@ class GameAdmin(admin.ModelAdmin):
     list_editable = ('on_sale', 'pre_order', )
     list_per_page = 15
     inlines = (InlineGameImage, )
+    prepopulated_fields = {'slug': ('name',)}
 
 admin.site.register(GameRatings)

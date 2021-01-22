@@ -1,6 +1,10 @@
 from django.db import models
 
 
+#------------------------------------------------------
+# MANY TO MANY GAME RELATIONS                         |
+#------------------------------------------------------
+
 class Genre(models.Model):
     name = models.CharField(max_length=30)
     def __str__(self):
@@ -15,3 +19,5 @@ class Platform(models.Model):
     name = models.CharField(max_length=30)
     def __str__(self):
         return self.name
+
+#-------------------------------------------------------

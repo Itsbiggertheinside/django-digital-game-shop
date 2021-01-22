@@ -3,35 +3,19 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .models import Game, GameImage
-from user.models.profile import Account
-from django.http import HttpResponseRedirect
-
-
-
-#-----------------------------------------------------------------------------------------------------------------
-class QueryHelper():
-    queryset = Game.objects.select_related('user').prefetch_related('genres', 'languages', 'platform', 'favourites')
-    def get_top_games(self):
-        pass
-    def get_latest_released_games(self):
-        return self.queryset.filter(pre_order=False).order_by('-release_date')[:10]
-    def get_pre_ordered_games(self):
-        return self.queryset.filter(pre_order=True).order_by('-release_date')[:10]
-#-----------------------------------------------------------------------------------------------------------------
+from django.http import HttpResponse
 
 
 
 # Create your views here.
 class GameHomeView(ListView):
-    queryset = QueryHelper()
+    model = Game
     template_name = 'base/home.html'
 
     def get_context_data(self, **kwargs):
         context = super(GameHomeView, self).get_context_data(**kwargs)
-        # context['games'] = self.queryset
-        # context['top_games'] = self.queryset.get_top_games()
-        context['latest_released_games'] = self.queryset.get_latest_released_games()
-        context['pre_ordered_games'] = self.queryset.get_pre_ordered_games()
+        context['latest_released_games'] = self.model.manager.get_latest_released_games(10)
+        context['pre_ordered_games'] = self.model.manager.get_pre_ordered_games(10)
         return context
     
 
@@ -51,22 +35,21 @@ class GameFavoritesView(LoginRequiredMixin, ListView):
     context_object_name = 'game_favourites'
 
     def get_queryset(self):
-        queryset = QueryHelper().queryset
-        favourited_games_by_user = queryset.filter(favourites__id=self.request.user.id)
-        return favourited_games_by_user
+        return Game.manager.get_favourited_games(self.request.user.id)
+    
 
 
 @login_required
 def add_favourite(request, slug):
     game = get_object_or_404(Game, slug=slug)
     game.favourites.add(request.user.id)
-    return HttpResponseRedirect(game.get_absolute_url())
+    return HttpResponse('added')
 
 @login_required
 def remove_favourite(request, slug):
     game = get_object_or_404(Game, slug=slug)
     game.favourites.remove(request.user.id)
-    return redirect('game:favourites')
+    return HttpResponse('removed')
 
 @login_required
 def add_checkout(request, slug):

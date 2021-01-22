@@ -1,5 +1,5 @@
 from django.core.management import BaseCommand
-from game.models.game_dependencies import Genre, Language, Platform
+from game.models import Genre, Language, Platform
 
 class Command(BaseCommand):
 
