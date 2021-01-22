@@ -5,17 +5,7 @@ from uuid import uuid4
 from django.conf import settings
 from .dependencies import Genre, Language, Platform
 from .managers import GameManager
-
-
-def upload_media(instance, filename):
-        file_format = filename.split('.')[-1] # .jpg, .png
-        file_name = f'{str(uuid4())}.{file_format}'
-        return 'uploads/user_{0}/games/{1}'.format(instance.game.user.id, file_name)
-
-def upload_banner(instance, filename):
-        file_format = filename.split('.')[-1] # .jpg, .png
-        file_name = f'{str(uuid4())}.{file_format}'
-        return 'uploads/user_{0}/games/{1}'.format(instance.user.id, file_name)
+from .helpers import upload_media, upload_banner
 
 
 class Game(models.Model):

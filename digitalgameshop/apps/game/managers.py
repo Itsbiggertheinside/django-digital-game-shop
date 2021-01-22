@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Prefetch
 
 
 class GameQuerySet(models.QuerySet):
@@ -15,7 +16,7 @@ class GameQuerySet(models.QuerySet):
 
 class GameManager(models.Manager):
     def get_queryset(self):
-        return GameQuerySet(self.model, using=self._db).select_related('user').prefetch_related('genres', 'languages', 'platform', 'favourites')
+        return GameQuerySet(self.model, using=self._db).select_related('user').prefetch_related('genres', 'languages', 'platform', 'favourites').all()
 
     def get_latest_released_games(self, size):
         return self.get_queryset().latest_released_games(size)
