@@ -99,7 +99,7 @@ class GameRatings(models.Model):
         return self.favourites.count()
 
     def calculate_score(self):
-        score = (1 + self.get_like_count()) * (1 + self.get_comment_count / 3) * (1 + self.get_favourite_count * 2)
+        score = (1 + self.likes.count()) * (1 + self.comments.count() / 3) * (1 + self.favourites.count() * 2)
         return score
 
 

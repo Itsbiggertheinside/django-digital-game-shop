@@ -2,7 +2,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from .models import Game, GameImage, Comment
+from django.db.models import Max
+from .models import Game, GameImage, GameRatings, Comment
 from .forms import CommentForm
 from django.http import HttpResponse
 
@@ -15,6 +16,7 @@ class GameHomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(GameHomeView, self).get_context_data(**kwargs)
+        # context['top_rated_games'] = GameRatings.objects.get(game__slug='test-2').calculate_score()
         context['latest_released_games'] = self.model.manager.get_latest_released_games(10)
         context['pre_ordered_games'] = self.model.manager.get_pre_ordered_games(10)
         return context
