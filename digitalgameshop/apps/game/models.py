@@ -4,12 +4,12 @@ from django.utils.text import slugify
 from uuid import uuid4
 from django.conf import settings
 from .dependencies import Genre, Language, Platform
-from .managers import GameManager
+from .managers import GameManager, CommentManager
 from .helpers import upload_media, upload_banner
 
 
 class Game(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='oyunlar', related_query_name='oyun')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='games', related_query_name='game_qs')
 
     name = models.CharField(max_length=35)
     price = models.PositiveSmallIntegerField()
@@ -71,6 +71,8 @@ class Game(models.Model):
             super().save(*args, **kwargs)
 
 
+    class Meta:
+        ordering = ['-created_at']
 
 
 class GameImage(models.Model):
@@ -90,8 +92,24 @@ class GameRatings(models.Model):
         return str(self.game)
 
     def get_like_count(self):
-        pass
+        return self.likes.count()
     def get_comment_count(self):
-        pass
-    def get_favorite_count(self):
-        pass
+        return self.comments.count()
+    def get_favourite_count(self):
+        return self.favourites.count()
+
+    def calculate_score(self):
+        score = (1 + self.get_like_count()) * (1 + self.get_comment_count / 3) * (1 + self.get_favourite_count * 2)
+        return score
+
+
+class Comment(models.Model):
+    parent = models.ForeignKey(Game, on_delete=models.PROTECT, related_name='game_comments')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.owner.username} - {self.parent.name}'
+
+    manager = CommentManager()

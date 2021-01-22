@@ -13,6 +13,9 @@ class GameQuerySet(models.QuerySet):
     def favourited_games(self, id):
         return self.filter(favourites__id=id)
 
+    def comments(self, id):
+        return self.filter(parent__id=id)
+
 
 class GameManager(models.Manager):
     def get_queryset(self):
@@ -27,8 +30,11 @@ class GameManager(models.Manager):
     def get_favourited_games(self, id):
         return self.get_queryset().favourited_games(id)
 
-# class GameImagesManager(models.Manager):
-#     pass
 
-# class GameRatingsManager(models.Manager):
-#     pass
+
+class CommentManager(models.Manager):
+    def get_queryset(self):
+        return GameQuerySet(self.model, using=self._db).select_related('parent', 'owner').all()
+
+    def get_comments(self, id):
+        return self.get_queryset().comments(id)

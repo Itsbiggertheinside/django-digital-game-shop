@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Game, GameImage, GameRatings
+from .models import Game, GameImage, GameRatings, Comment
 
 # Register your models here.
 class InlineGameImage(admin.StackedInline):
@@ -15,3 +15,4 @@ class GameAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 admin.site.register(GameRatings)
+admin.site.register(Comment)

@@ -2,7 +2,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from .models import Game, GameImage
+from .models import Game, GameImage, Comment
+from .forms import CommentForm
 from django.http import HttpResponse
 
 
@@ -27,7 +28,21 @@ class GameDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(GameDetailView, self).get_context_data(**kwargs)
         context['images'] = GameImage.objects.select_related('game').filter(game=self.get_object())
+        context['comments'] = Comment.manager.get_comments(id=self.get_object().id)
+        context['comment_form'] = CommentForm
+        context['latest_released_games'] = self.model.manager.get_latest_released_games(10)
         return context
+
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(request.POST or None)
+        if form.is_valid():
+            parent = self.get_object()
+            owner = request.user
+            comment = form.cleaned_data.get('comment')
+            send = Comment(parent=parent, owner=owner, comment=comment)
+            send.save()
+
+        return HttpResponse('sended!')
 
 
 class GameFavoritesView(LoginRequiredMixin, ListView):
