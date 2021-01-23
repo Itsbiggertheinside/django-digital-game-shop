@@ -1,13 +1,15 @@
 from django.db import models
+from django.conf import settings
+from .helpers import StatusChoice
 
 
 class GameQuerySet(models.QuerySet):
 
     def latest_released_games(self, size):
-        return self.filter(pre_order=False).order_by('-release_date')[:size]
+        return self.filter(status=StatusChoice.ON_SALE).order_by('-release_date')[:size]
 
     def pre_ordered_games(self, size):
-        return self.filter(pre_order=True).order_by('-release_date')[:size]
+        return self.filter(status=StatusChoice.PRE_ORDER).order_by('-release_date')[:size]
 
     def favourited_games(self, id):
         return self.filter(favourites__id=id)
@@ -18,7 +20,7 @@ class GameQuerySet(models.QuerySet):
 
 class GameManager(models.Manager):
     def get_queryset(self):
-        return GameQuerySet(self.model, using=self._db).select_related('user').prefetch_related('genres', 'languages', 'platform', 'favourites').all()
+        return GameQuerySet(self.model, using=self._db).select_related(settings.AUTH_USER_MODEL)
 
     def get_latest_released_games(self, size):
         return self.get_queryset().latest_released_games(size)
@@ -33,7 +35,7 @@ class GameManager(models.Manager):
 
 class CommentManager(models.Manager):
     def get_queryset(self):
-        return GameQuerySet(self.model, using=self._db).select_related('parent', 'owner').all()
+        return GameQuerySet(self.model, using=self._db)
 
     def get_comments(self, id):
         return self.get_queryset().comments(id)

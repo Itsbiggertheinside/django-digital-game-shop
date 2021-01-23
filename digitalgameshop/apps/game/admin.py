@@ -8,11 +8,11 @@ class InlineGameImage(admin.StackedInline):
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'developer', 'release_date', 'on_sale', 'pre_order',)
-    list_editable = ('on_sale', 'pre_order', )
+    list_display = ('name', 'price', 'developer', 'release_date', 'status',)
+    list_editable = ('status',)
     list_per_page = 15
     inlines = (InlineGameImage, )
     prepopulated_fields = {'slug': ('name',)}
 
-admin.site.register(GameRatings)
+
 admin.site.register(Comment)
