@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (GameHomeView, 
                     GameDetailView, 
                     GameFavoritesView,
+                    GameCatalogView,
                     add_favourite,
                     remove_favourite,
                     add_checkout,
@@ -12,6 +13,7 @@ app_name = 'game'
 urlpatterns = [
 
     path('', GameHomeView.as_view(), name='home'),
+    path('catalog/', GameCatalogView.as_view(), name='catalog'),
     path('game/detail/<slug:slug>/', GameDetailView.as_view(), name='detail'),
     
     path('favourites/', GameFavoritesView.as_view(), name='favourites'),

@@ -63,6 +63,11 @@ class GameFavoritesView(LoginRequiredMixin, ListView):
         return Game.manager.get_favourited_games(self.request.user.id)
     
 
+class GameCatalogView(ListView):
+    model = Game
+    template_name = 'base/catalog.html'
+    context_object_name = 'games'
+
 
 @login_required
 def add_favourite(request, slug):
