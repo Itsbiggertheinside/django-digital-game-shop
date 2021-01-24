@@ -1,0 +1,6 @@
+we need a cropper.js for cropping
+---------------------------------
+card's image size: 240 x 340 px
+detail page's showcase carousel: 180 x 180 px
+article photos: 640 x 400 px
+profile pictures: 50 x 50 px
