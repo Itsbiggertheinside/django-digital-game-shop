@@ -19,7 +19,7 @@ class GameHomeView(ListView):
         # calculate_rating = [game.calculate_score() for game in self.model.objects.all()]
         get_top_rated_games = self.model.objects.select_related('user') \
         .prefetch_related('genres', 'languages', 'platform', 'favourites').annotate(
-            scores=ExpressionWrapper((F('metascore') * F('favourites')), 
+            scores=ExpressionWrapper((F('metascore') * ( 1 + F('favourites'))), 
             output_field=PositiveIntegerField())) \
             .order_by('-scores')
 
