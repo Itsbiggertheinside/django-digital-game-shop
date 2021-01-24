@@ -1,6 +1,6 @@
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from .models import Game, GameRatings
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
+# from .models import Game, GameRatings
 
 # @receiver(post_save, sender=Game)
 # def create_ratings(sender, instance, created, **kwargs):

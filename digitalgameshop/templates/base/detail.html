@@ -47,6 +47,11 @@
                     </div>
 
                     <div class="details__cart">
+                        <span class="details__cart-title"><b>Rating</b></span>
+                        <span class="details__cart-title" style='font-size: 20px; color: green;'>METASCORE {{ game_detail.metascore }}</span>
+                        {% comment %} <span class="details__cart-title">Beğeni sayısı: {{ game_detail.likes.count }}</span> {% endcomment %}
+                        <span class="details__cart-title mb-3">Etkin favori sayısı: {{ game_detail.favourites.count }}</span>
+                        
                         <span class="details__cart-title">Oynanabilir Platformlar:</span>
                         <ul class="details__platforms">
                             {% for platform in game_detail.get_platforms %}
@@ -64,11 +69,11 @@
 
                         <span class="details__cart-title">Ücreti</span>
                         <div class="details__price">
-                            <span>{{ game_detail.price }}₺</span> {% comment %} <s>$38.80</s><b>60% OFF</b> {% endcomment %}
+                            <span>{{ game_detail.price }} ₺</span> {% comment %} <s>$38.80</s><b>60% OFF</b> {% endcomment %}
                         </div>
 
                         <div class="details__actions">
-                            <button class="details__buy" type="button">Satın Al</button>
+                            <button class="details__buy" type="button">Sepete Ekle</button>
 
                             <button class="details__favorite" type="button">
                             <a href='{{ game_detail.add_favourite_url }}'>

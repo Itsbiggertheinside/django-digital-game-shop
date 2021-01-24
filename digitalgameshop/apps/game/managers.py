@@ -1,9 +1,12 @@
 from django.db import models
-from django.conf import settings
 from .helpers import StatusChoice
 
 
 class GameQuerySet(models.QuerySet):
+
+    # def top_rated_games(self, size):
+    #     calculate_rating = 
+    #     return self.aggregate(models.Max(calculate_rating))[:size]
 
     def latest_released_games(self, size):
         return self.filter(status=StatusChoice.ON_SALE).order_by('-release_date')[:size]
@@ -20,7 +23,10 @@ class GameQuerySet(models.QuerySet):
 
 class GameManager(models.Manager):
     def get_queryset(self):
-        return GameQuerySet(self.model, using=self._db).select_related(settings.AUTH_USER_MODEL)
+        return GameQuerySet(self.model, using=self._db)
+
+    # def get_top_rated_games(self, size):
+    #     return self.get_queryset().top_rated_games(size)
 
     def get_latest_released_games(self, size):
         return self.get_queryset().latest_released_games(size)
@@ -32,6 +38,13 @@ class GameManager(models.Manager):
         return self.get_queryset().favourited_games(id)
 
 
+# class RatingManager(models.Manager):
+#     def get_queryset(self):
+#         return GameQuerySet(self.model, using=self._db)
+
+#     def get_ratings(self, id):
+#         return self.get_queryset().ratings(id)
+    
 
 class CommentManager(models.Manager):
     def get_queryset(self):
