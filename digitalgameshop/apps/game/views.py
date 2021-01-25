@@ -24,6 +24,7 @@ class GameHomeView(ListView):
 
         get_latest_released_games = Game.objects.select_related('user') \
         .prefetch_related('platform').filter(status='ON_SALE').order_by('-release_date')
+        
         get_pre_ordered_games = Game.objects.select_related('user') \
         .prefetch_related('platform').filter(status='PRE_ORDER').order_by('-release_date')
 
