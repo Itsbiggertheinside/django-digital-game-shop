@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.db.models import Min, Max, F, Q, PositiveIntegerField, ExpressionWrapper
 from .models import Game, GameImage, Comment
 from .forms import CommentForm
+from user.models import CheckoutItem
 
 
 
@@ -66,7 +67,7 @@ class GameFavoritesView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Game.objects.select_related('user') \
-        .prefetch_related('platform').filter(favourites__id=self.request.user.id)
+        .prefetch_related('platform').filter(favourites__slug=self.request.user.slug)
     
 
 class GameCatalogView(ListView):
@@ -80,19 +81,25 @@ class GameCatalogView(ListView):
 @login_required
 def add_favourite(request, slug):
     game = get_object_or_404(Game, slug=slug)
-    game.favourites.add(request.user.id)
+    game.favourites.add(request.user.slug)
     return HttpResponse('added')
 
 @login_required
 def remove_favourite(request, slug):
     game = get_object_or_404(Game, slug=slug)
-    game.favourites.remove(request.user.id)
+    game.favourites.remove(request.user.slug)
     return HttpResponse('removed')
 
 @login_required
 def add_checkout(request, slug):
-    pass
+    item = get_object_or_404(Game, slug=slug)
+    CheckoutItem.objects.get_or_create(owner=request.user)
+    request.user.checkouts.add(item)
+    return HttpResponse('added')
 
 @login_required
 def remove_checkout(request, slug):
-    pass
+    item = get_object_or_404(Game, slug=slug)
+    CheckoutItem.objects.get_or_create(owner=request.user)
+    request.user.checkouts.remove(item)
+    return HttpResponse('removed')

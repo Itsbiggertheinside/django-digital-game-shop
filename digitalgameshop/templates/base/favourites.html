@@ -57,7 +57,11 @@
                             </div>
 
                             <div class="card__actions">
-                                <button class="card__buy" type="button">Satın al</button>
+                                <button class="card__buy" type="button">
+                                    <a href="{{ game.add_item_to_checkout_url }}">
+                                        Sepete Ekle
+                                    </a>
+                                </button>
 
                                 <button class="card__favorite card__favorite--delete" type="button">
                                 <a href='{{ game.remove_favourite_url }}'>

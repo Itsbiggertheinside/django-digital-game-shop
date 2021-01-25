@@ -1,0 +1,127 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section section--first section--last section--head" data-bg="{% static 'img/backgrounds/home-background.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section__wrap">
+                    <!-- section title -->
+                    <h2 class="section__title">Checkout</h2>
+                    <!-- end section title -->
+
+                    <!-- breadcrumb -->
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb__item"><a href="{% url 'game:home' %}">Home</a></li>
+                        <li class="breadcrumb__item breadcrumb__item--active">Checkout</li>
+                    </ul>
+                    <!-- end breadcrumb -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end page title -->
+
+<!-- section -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <!-- cart -->
+                <div class="cart">
+                    <div class="table-responsive">
+                        <table class="cart__table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Title</th>
+                                    <th>Platform</th>
+                                    <th>Price</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="cart__img">
+                                            <img src="img/cards/8.jpg" alt="">
+                                        </div>
+                                    </td>
+                                    <td>Baldur's Gate: Enhanced Edition</td>
+                                    <td>PC</td>
+                                    <td><span class="cart__price">$19.99</span></td>
+                                    <td><button class="cart__delete" type="button"><svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><line x1='368' y1='368' x2='144' y2='144' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line><line x1='368' y1='144' x2='144' y2='368' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line></svg></button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="cart__img">
+                                            <img src="img/cards/3.jpg" alt="">
+                                        </div>
+                                    </td>
+                                    <td>Dandara: Trials of Fear Edition</td>
+                                    <td>Playstation</td>
+                                    <td><span class="cart__price">$7.99</span></td>
+                                    <td><button class="cart__delete" type="button"><svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><line x1='368' y1='368' x2='144' y2='144' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line><line x1='368' y1='144' x2='144' y2='368' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line></svg></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="cart__info">
+                        <div class="cart__total">
+                            <p>Total:</p>
+                            <span>$27.98</span>
+                        </div>
+
+                        <div class="cart__systems">
+                            <i class="pf pf-visa"></i>
+                            <i class="pf pf-mastercard"></i>
+                            <i class="pf pf-paypal"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- end cart -->
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <!-- checkout -->
+                <form action="#" class="form form--first form--coupon">
+                    <input type="text" class="form__input" placeholder="Coupon code">
+                    <button type="button" class="form__btn">Kuponu Uygula</button>
+                </form>
+                <!-- end checkout -->
+
+                <!-- checkout -->
+                <form action="#" class="form">
+                    <input type="text" class="form__input" placeholder="Tufan Kılınç">
+                    <input type="text" class="form__input" placeholder="tufankilinc@outlook.com">
+                    <input type="text" class="form__input" placeholder="+90 531 893 65 92">
+                    <button type="button" class="form__btn">Tamamla</button>
+                </form>
+                <!-- end checkout -->
+            </div>
+        </div>	
+    </div>
+</div>
+<!-- end section -->
+
+<!-- section -->
+<div class="section section--last">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="partners owl-carousel">
+                {% for partner in partners %}
+                    <a href="#" class="partners__img">
+                        <img src="img/partners/3docean-light-background.png" alt="">
+                    </a>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

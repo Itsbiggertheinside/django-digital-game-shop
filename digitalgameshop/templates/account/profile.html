@@ -1,8 +1,21 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block %}
-<section class="section section--first section--last section--head" data-bg="img/bg.jpg">
+{% block style %}
+    <style>
+        .breadcrumb {
+            background: transparent;
+        }
+        
+        .nav-link.active {
+            background-color: rgb(70 39 125) !important;
+            color: white !important;
+        }
+    </style>
+{% endblock style %}
+
+{% block content %}
+<section class="section section--first section--last section--head" data-bg="{% static 'img/backgrounds/detail-background.jpg' %}">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -217,4 +230,4 @@
         <!-- end content tabs -->
     </div>
 </section>
-{% endblock %}
+{% endblock content %}
