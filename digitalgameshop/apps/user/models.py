@@ -8,6 +8,7 @@ from .helpers import upload_media
 class Account(AbstractUser):
     profile_pic = models.ImageField(upload_to=upload_media, default='default-profile-pic.jpg')
     phone_number = models.CharField(max_length=11, null=True, blank=True)
+    slug = models.SlugField(primary_key=True)
 
 
     def save(self, *args, **kwargs):
