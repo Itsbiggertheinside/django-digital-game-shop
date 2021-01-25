@@ -22,12 +22,6 @@ class Account(AbstractUser):
     def get_checkout_url(self, **kwargs):
         return reverse('checkout', kwargs={'slug': self.slug})
 
-    def add_item_to_checkout_url(self, **kwargs):
-        return reverse('add-checkout', kwargs={'slug': self.slug})
-    
-    def remove_item_from_checkout_url(self, **kwargs):
-        return reverse('remove-checkout', kwargs={'slug': self.slug})
-
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.username.replace('ı', 'i'))

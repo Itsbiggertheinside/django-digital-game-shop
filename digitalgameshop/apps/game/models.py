@@ -58,6 +58,12 @@ class Game(models.Model):
     def remove_favourite_url(self):
         return reverse('game:remove-favourite', kwargs={'slug': self.slug})
 
+    def add_item_to_checkout_url(self, **kwargs):
+        return reverse('game:add-checkout', kwargs={'slug': self.slug})
+    
+    def remove_item_from_checkout_url(self, **kwargs):
+        return reverse('game:remove-checkout', kwargs={'slug': self.slug})
+
     def create_unique_slug(self):
         letter_fix = slugify(self.name.replace('ı', 'i'))
         random_char = uuid4().hex[:4]

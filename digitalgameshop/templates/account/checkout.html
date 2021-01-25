@@ -44,28 +44,19 @@
                             </thead>
 
                             <tbody>
+                                {% for item in items %}
                                 <tr>
                                     <td>
                                         <div class="cart__img">
                                             <img src="img/cards/8.jpg" alt="">
                                         </div>
                                     </td>
-                                    <td>Baldur's Gate: Enhanced Edition</td>
+                                    <td>{{ item }}</td>
                                     <td>PC</td>
                                     <td><span class="cart__price">$19.99</span></td>
                                     <td><button class="cart__delete" type="button"><svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><line x1='368' y1='368' x2='144' y2='144' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line><line x1='368' y1='144' x2='144' y2='368' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line></svg></button></td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="cart__img">
-                                            <img src="img/cards/3.jpg" alt="">
-                                        </div>
-                                    </td>
-                                    <td>Dandara: Trials of Fear Edition</td>
-                                    <td>Playstation</td>
-                                    <td><span class="cart__price">$7.99</span></td>
-                                    <td><button class="cart__delete" type="button"><svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><line x1='368' y1='368' x2='144' y2='144' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line><line x1='368' y1='144' x2='144' y2='368' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line></svg></button></td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

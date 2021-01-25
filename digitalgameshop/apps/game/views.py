@@ -94,7 +94,7 @@ def remove_favourite(request, slug):
 def add_checkout(request, slug):
     item = get_object_or_404(Game, slug=slug)
     CheckoutItem.objects.get_or_create(owner=request.user)
-    request.user.checkouts.add(item)
+    Game.objects.filter(checkout__owner=request.user).add(item)
     return HttpResponse('added')
 
 @login_required
