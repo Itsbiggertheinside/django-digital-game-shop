@@ -2,10 +2,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.db.models import Min, Max, F, Q, PositiveIntegerField, ExpressionWrapper
 from .models import Game, GameImage, Comment
 from .forms import CommentForm
-from django.http import HttpResponse
-from django.db.models import Min, Max, F, PositiveIntegerField, ExpressionWrapper
 
 
 
@@ -16,17 +16,21 @@ class GameHomeView(ListView):
 
     def get_context_data(self, **kwargs):
         
-        # calculate_rating = [game.calculate_score() for game in self.model.objects.all()]
-        get_top_rated_games = self.model.objects.select_related('user') \
-        .prefetch_related('genres', 'languages', 'platform', 'favourites').annotate(
+        get_top_rated_games = Game.objects.select_related('user') \
+        .prefetch_related('genres', 'languages', 'platform').annotate(
             scores=ExpressionWrapper((F('metascore') * ( 1 + F('favourites'))), 
             output_field=PositiveIntegerField())) \
             .order_by('-scores')
 
+        get_latest_released_games = Game.objects.select_related('user') \
+        .prefetch_related('platform').filter(status='ON_SALE').order_by('-release_date')
+        get_pre_ordered_games = Game.objects.select_related('user') \
+        .prefetch_related('platform').filter(status='PRE_ORDER').order_by('-release_date')
+
         context = super(GameHomeView, self).get_context_data(**kwargs)
         context['top_rated_games'] = get_top_rated_games[:5]
-        context['latest_released_games'] = self.model.manager.get_latest_released_games(10)
-        context['pre_ordered_games'] = self.model.manager.get_pre_ordered_games(10)
+        context['latest_released_games'] = get_latest_released_games[:10]
+        context['pre_ordered_games'] = get_pre_ordered_games[:10]
         return context
     
 
@@ -38,9 +42,9 @@ class GameDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(GameDetailView, self).get_context_data(**kwargs)
         context['images'] = GameImage.objects.select_related('game').filter(game=self.get_object())
-        context['comments'] = Comment.manager.get_comments(id=self.get_object().id)
+        context['comments'] = Comment.objects.select_related('parent', 'owner').filter(parent__id=self.get_object().id)
         context['comment_form'] = CommentForm
-        context['latest_released_games'] = self.model.manager.get_latest_released_games(10)
+        context['latest_released_games'] = Game.objects.filter(status='ON_SALE').order_by('-release_date')[:10]
         return context
 
     def post(self, request, *args, **kwargs):
@@ -60,11 +64,14 @@ class GameFavoritesView(LoginRequiredMixin, ListView):
     context_object_name = 'game_favourites'
 
     def get_queryset(self):
-        return Game.manager.get_favourited_games(self.request.user.id)
+        return Game.objects.select_related('user') \
+        .prefetch_related('platform').filter(favourites__id=self.request.user.id)
     
 
 class GameCatalogView(ListView):
-    model = Game
+    queryset = Game.objects.select_related('user') \
+        .prefetch_related('platform').order_by('-created_at')
+
     template_name = 'base/catalog.html'
     context_object_name = 'games'
 

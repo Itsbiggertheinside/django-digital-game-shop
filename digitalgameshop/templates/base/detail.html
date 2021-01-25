@@ -64,7 +64,7 @@
                         <span class="details__cart-title">METASCORE <span  style='font-size: 20px; color: green;'>{{ game_detail.metascore }}</span></span>
                         {% comment %} <span class="details__cart-title">Beğeni sayısı: {{ game_detail.likes.count }}</span> {% endcomment %}
                         <span class="details__cart-title mb-3">Etkin favori sayısı: {{ game_detail.favourites.count }}</span>
-                        <span class="details__cart-title mb-3">Ürünün durumu: {{ game_detail.status }}</span>
+                        <span class="details__cart-title mb-3">Ürünün durumu: {{ game_detail.get_status_display }}</span>
                         
                         
 

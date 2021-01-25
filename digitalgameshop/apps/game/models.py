@@ -5,9 +5,15 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 from django.conf import settings
 from .dependencies import Genre, Language, Platform
-from .managers import GameManager, CommentManager
-from .helpers import upload_media, upload_banner, StatusChoice
+from .helpers import upload_media, upload_banner
 
+
+STATUS_CHOICE = (
+    ('ON_SALE', 'Satışta'),
+    ('PRE_ORDER', 'Ön Sipariş'),
+    ('SECOND_HAND', 'İkinci El'),
+    ('SOLD', 'Satıldı'),
+)
 
 class Game(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='games', related_query_name='game_qs')
@@ -23,25 +29,17 @@ class Game(models.Model):
     requirements_minimum = models.TextField(null=True, blank=True)
     requirements_recommended = models.TextField(null=True, blank=True)
 
-    status = models.CharField(max_length=2, choices=StatusChoice.choices, default=StatusChoice.ON_SALE)
+    status = models.CharField(max_length=15, choices=STATUS_CHOICE, default='ON_SALE')
     stock = models.PositiveIntegerField(default=1)
 
-    # dependencies
     genres = models.ManyToManyField(Genre)
     languages = models.ManyToManyField(Language)
     platform = models.ManyToManyField(Platform)
 
-    # special
-    # ratings = models.OneToOneField('game.GameRatings', on_delete=models.CASCADE, related_name='ratings_game', blank=True)
-    # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likes', blank=True)
     favourites = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favourites', blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=255, unique=True)
-
-    objects = models.Manager()
-    manager = GameManager()
-
 
     def __str__(self):
         return self.name
@@ -71,23 +69,12 @@ class Game(models.Model):
             self.slug = self.create_unique_slug()
             return super(Game, self).save(*args, **kwargs)
         
-        # if not self.ratings:
-        #     self.ratings = GameRatings.objects.create()
-        #     return super(Game, self).save(*args, **kwargs)
-        
         super().save(*args, **kwargs)
 
 
 class GameImage(models.Model):
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to=upload_media)
-
-
-# class GameRatings(models.Model):
-#     game = models.OneToOneField(Game, on_delete=models.CASCADE, related_name='game_ratings', blank=True)
-#     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='game_total_likes', blank=True)
-#     comments = models.ManyToManyField('game.Comment', related_name='game_total_comments', blank=True)
-#     favourites = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='game_total_favourites', blank=True)
 
 
 class Comment(models.Model):
@@ -99,4 +86,3 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.owner.username} - {self.parent.name}'
 
-    manager = CommentManager()

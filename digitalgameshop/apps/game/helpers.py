@@ -12,8 +12,3 @@ def upload_banner(instance, filename):
         file_format = filename.split('.')[-1] # .jpg, .png
         file_name = f'{str(uuid4())}.{file_format}'
         return 'uploads/user_{0}/games/{1}'.format(instance.user.id, file_name)
-
-
-class StatusChoice(TextChoices):
-        ON_SALE = 'S', _('Satışta')
-        PRE_ORDER = 'P', _('Ön Sipariş')
