@@ -25,6 +25,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     path('', include('game.urls')),
+    path('user/', include('user.urls')),
 
     path('__debug__/', include(debug_toolbar.urls)),
     

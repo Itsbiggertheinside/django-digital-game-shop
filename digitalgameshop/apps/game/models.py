@@ -79,7 +79,7 @@ class GameImage(models.Model):
 
 class Comment(models.Model):
     parent = models.ForeignKey(Game, on_delete=models.PROTECT, related_name='game_comments', related_query_name='game_comment')
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

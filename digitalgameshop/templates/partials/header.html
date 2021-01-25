@@ -57,9 +57,7 @@
 										<li><a href="{% comment %}
 											{% url 'about-us' %}
 										{% endcomment %}">Hakkımızda</a></li>
-										<li><a href="{% comment %}
-											{% url 'profile' %}
-										{% endcomment %}">Profil</a></li>
+										<li><a href="{% url 'profile' %}">Profil</a></li>
 										<li><a href="forgot.html">Şifremi Unuttum</a></li>
 										<li><a href="{% comment %}
 											{% url 'contact-us' %}
@@ -68,6 +66,7 @@
 								</li>
 							</ul>
 
+							{% if not request.user.is_authenticated %}
 							<div class="header__actions">
 								<a href="{% url 'account_signup' %}" class="header__login">
 									<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><path d='M192,176V136a40,40,0,0,1,40-40H392a40,40,0,0,1,40,40V376a40,40,0,0,1-40,40H240c-22.09,0-48-17.91-48-40V336' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></path><polyline points='288 336 368 256 288 176' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></polyline><line x1='80' y1='256' x2='352' y2='256' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line></svg>
@@ -78,6 +77,14 @@
 									<span>Giriş Yap</span>
 								</a>
 							</div>
+							{% else %}
+							<div class="header__actions">
+								<a href="{% url 'profile' %}" class="header__login" style="margin-left: auto;">
+									<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><path d='M192,176V136a40,40,0,0,1,40-40H392a40,40,0,0,1,40,40V376a40,40,0,0,1-40,40H240c-22.09,0-48-17.91-48-40V336' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></path><polyline points='288 336 368 256 288 176' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></polyline><line x1='80' y1='256' x2='352' y2='256' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line></svg>
+									<span>{{ request.user.username }}</span>
+								</a>
+							</div>
+							{% endif %}
 						</div>
 					</div>
 				</div>
