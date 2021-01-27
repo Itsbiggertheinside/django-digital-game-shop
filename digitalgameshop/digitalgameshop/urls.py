@@ -24,8 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
 
-    path('', include('game.urls')),
-    path('user/', include('user.urls')),
+    path('', include('store.urls')),
+    # path('user/', include('user.urls')),
 
     path('__debug__/', include(debug_toolbar.urls)),
     

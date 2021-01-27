@@ -12,27 +12,27 @@
 								<span></span>
 							</button>
 
-							<a href="{% url 'game:home' %}" class="header__logo">
+							<a href="{% url 'home' %}" class="header__logo">
 								<img src="{% static 'img/icon/favicon-32x32.png' %}" alt="">
 								<span>Dijital Market</span>
 							</a>
 
 							<ul class="header__nav">
 								<li class="header__nav-item">
-									<a class="header__nav-link" href="{% url 'game:home' %}">ANA SAYFA</a>
+									<a class="header__nav-link" href="{% url 'home' %}">ANA SAYFA</a>
 								</li>
 								<li class="header__nav-item">
 									<a class="header__nav-link" href="#" role="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">KATALOG <svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewbox='0 0 512 512'><path fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 184l144 144 144-144'></path></svg></a>
 
 									<ul class="dropdown-menu header__nav-menu" aria-labelledby="dropdownMenu1">
-										<li><a href="{% url 'game:catalog' %}">Katalog</a></li>
+										<li><a href="{% url 'catalog' %}">Katalog</a></li>
 										<li class="dropdown-submenu">
 											<a class="dropdown-item" href="#" role="button" id="dropdownMenuSub" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategoriler</a>
 
 											<ul class="dropdown-menu header__nav-menu" aria-labelledby="dropdownMenuSub">
-												<li><a href="{% url 'game:catalog' %}">Son Çıkanlar</a></li>
-												<li><a href="{% url 'game:catalog' %}">Ön Sipariş</a></li>
-												<li><a href="{% url 'game:catalog' %}">İkinci El</a></li>
+												<li><a href="{% url 'catalog' %}">Son Çıkanlar</a></li>
+												<li><a href="{% url 'catalog' %}">Ön Sipariş</a></li>
+												<li><a href="{% url 'catalog' %}">İkinci El</a></li>
 											</ul>
 										</li>
 									</ul>
@@ -53,7 +53,7 @@
 
 									<ul class="dropdown-menu header__nav-menu header__nav-menu--scroll" aria-labelledby="dropdownMenu3">
 										<li><a href="checkout.html">Sepetim</a></li>
-										<li><a href="{% url 'game:favourites' %}">Favorilerim</a></li>
+										<li><a href="{% url 'favourites' %}">Favorilerim</a></li>
 										<li><a href="{% comment %}
 											{% url 'about-us' %}
 										{% endcomment %}">Hakkımızda</a></li>
@@ -117,7 +117,7 @@
 							</form>
 
 							<div class="header__actions header__actions--2">
-								<a href="{% url 'game:favourites' %}" class="header__link">
+								<a href="{% url 'favourites' %}" class="header__link">
 									<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><path d='M352.92,80C288,80,256,144,256,144s-32-64-96.92-64C106.32,80,64.54,124.14,64,176.81c-1.1,109.33,86.73,187.08,183,252.42a16,16,0,0,0,18,0c96.26-65.34,184.09-143.09,183-252.42C447.46,124.14,405.68,80,352.92,80Z' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></path></svg>
 									<span>Favoriler</span>
 								</a>

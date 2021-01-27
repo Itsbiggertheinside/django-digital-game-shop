@@ -16,7 +16,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+# sys.path.insert(0, os.path.join(BASE_DIR, 'apps')) -> eğer app'leri tek bir folder içerisinde birleştirmek istersek
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -49,8 +49,10 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
 
-    'game.apps.GameConfig',
-    'user.apps.UserConfig',
+    # 'game.apps.GameConfig',
+    # 'user.apps.UserConfig',
+    'store.apps.StoreConfig',
+    'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,9 +68,7 @@ MIDDLEWARE = [
 ]
 
 INTERNAL_IPS = [
-    # ...
     '127.0.0.1',
-    # ...
 ]
 
 ROOT_URLCONF = 'digitalgameshop.urls'
@@ -92,7 +92,7 @@ TEMPLATES = [
     },
 ]
 
-AUTH_USER_MODEL = 'user.Account'
+# AUTH_USER_MODEL = 'user.Account'
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
