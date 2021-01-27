@@ -9,7 +9,7 @@
           <!-- registration form -->
           <form class="signup sign__form" id="signup_form" method="post" action="{% url 'account_signup' %}">
             {% csrf_token %}
-            <a href="{% url 'game:home' %}" class="sign__logo">
+            <a href="{% url 'home' %}" class="sign__logo">
                 <img src="{% static 'img/icon/favicon-32x32.png' %}" alt="">
             </a>
 

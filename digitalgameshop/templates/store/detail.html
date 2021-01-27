@@ -18,9 +18,9 @@
 
                             <ul class="details__list">
                                 <li><span>Çıkış tarihi:</span> {{ game.release_date }}</li>
-                                <li><span>Türler:</span> Action, Role Playing, Open World</li>
+                                <li><span>Türler:</span> {% for genre in game.genres.all %}{{genre}} &nbsp{% endfor %}</li>
                                 <li><span>Geliştirici ekip:</span> {{ game.developer }}</li>
-                                <li><span>Mevcut diller:</span> English, German, French, Russian</li>
+                                <li><span>Mevcut diller:</span> {% for language in game.languages.all %}{{language}} &nbsp{% endfor %}</li>
                             </ul>
 
                             <div class="details__text">
@@ -64,7 +64,8 @@
                         <span class="details__cart-title">METASCORE <span  style='font-size: 20px; color: green;'>{{ game.metascore }}</span></span>
                         {% comment %} <span class="details__cart-title">Beğeni sayısı: {{ game_detail.likes.count }}</span> {% endcomment %}
                         <span class="details__cart-title mb-3">Etkin favori sayısı: {{ game.favourites.count }}</span>
-                        <span class="details__cart-title mb-3">Ürünün durumu: {{ game.get_status_display }}</span>
+                        <span class="details__cart-title mb-3">Ürün durumu: {{ game.get_status_display }}</span>
+                        <span class="details__cart-title mb-3">Stok durumu: {{ game.stock }}</span>
                         
                         
 

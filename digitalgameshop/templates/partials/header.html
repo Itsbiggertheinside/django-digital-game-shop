@@ -57,7 +57,7 @@
 										<li><a href="{% comment %}
 											{% url 'about-us' %}
 										{% endcomment %}">Hakkımızda</a></li>
-										<li><a href="{{ request.user.get_absolute_url }}">Profil</a></li>
+										<li><a href="{{ request.user }}">Profil</a></li>
 										<li><a href="forgot.html">Şifremi Unuttum</a></li>
 										<li><a href="{% comment %}
 											{% url 'contact-us' %}
