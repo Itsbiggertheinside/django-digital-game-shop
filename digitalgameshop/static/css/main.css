@@ -4833,3 +4833,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 button a { color: white; padding: 1rem; }
 button a:hover { color: #212529; }
+
+
+.order-item-link { color: whitesmoke; padding: .1rem; }
+.order-item-link:hover { color: #a782e9; }
+#mCSB_2_dragger_horizontal .mCSB_dragger_bar { background-color: #a782e9; }

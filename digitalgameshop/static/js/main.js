@@ -334,6 +334,10 @@ $(document).ready(function () {
 		theme: "custom-bar2"
 	});
 
+	$('.table-responsive').mCustomScrollbar({
+		axis: "x",
+	});
+
 	/*==============================
 	Range sliders
 	==============================*/

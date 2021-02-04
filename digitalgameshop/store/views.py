@@ -78,7 +78,7 @@ class GameCatalogView(ListView):
     context_object_name = 'games'
 
 
-class CheckoutView(View):
+class CheckoutView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         items = OrderItem.objects.select_related('order', 'item').filter(order__owner=self.request.user)
@@ -113,3 +113,24 @@ def add_to_order(request, id=None):
     order_item.quantity += 1
     order_item.save()
     return JsonResponse({'success': 'ok'}, status=200)
+
+@login_required
+def plus_quantity(request, id=None):
+    order_item = get_object_or_404(OrderItem, id=id)
+    order_item.quantity += 1
+    order_item.save()
+    return JsonResponse({'quantity': order_item.quantity}, status=200)
+
+@login_required
+def less_quantity(request, id=None):
+    order_item = get_object_or_404(OrderItem, id=id)
+    order_item.quantity -= 1
+    order_item.save()
+    return JsonResponse({'quantity': order_item.quantity}, status=200)
+
+@login_required
+def remove_item(request, id=None):
+    order_item = get_object_or_404(OrderItem, id=id)
+    order_item.delete()
+    return JsonResponse({'success': 'ok'}, status=200)
+    

@@ -7,7 +7,10 @@ from .views import (
     CheckoutView,
     add_favourite,
     remove_favourite,
-    add_to_order
+    add_to_order,
+    plus_quantity,
+    less_quantity,
+    remove_item,
     )
 
 urlpatterns = [
@@ -22,5 +25,8 @@ urlpatterns = [
     
     path('checkout/order', CheckoutView.as_view(), name='checkout'),
     path('checkout/order/add/<int:id>', add_to_order, name='add-to-order'),
+    path('checkout/order/item/plus-quantity/<int:id>', plus_quantity, name='plus-quantity'),
+    path('checkout/order/item/less-quantity/<int:id>', less_quantity, name='less-quantity'),
+    path('checkout/order/item/remove/<int:id>', remove_item, name='remove-item'),
 
 ]

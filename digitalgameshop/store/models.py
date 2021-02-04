@@ -84,3 +84,12 @@ class OrderItem(models.Model):
     @property
     def calculate_row_price(self):
         return self.item.price * self.quantity
+
+    def plus_quantity_url(self):
+        return reverse('plus-quantity', kwargs={'id': self.id})
+
+    def less_quantity_url(self):
+        return reverse('less-quantity', kwargs={'id': self.id})
+
+    def remove_from_order_url(self):
+        return reverse('remove-item', kwargs={'id': self.id})
