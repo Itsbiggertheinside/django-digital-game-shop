@@ -4830,3 +4830,6 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .mCS-custom-bar2.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar {
   background-color: #a782e9;
 }
+
+button a { color: white; padding: 1rem; }
+button a:hover { color: #212529; }

@@ -8,13 +8,13 @@
             <div class="col-12">
                 <div class="section__wrap">
                     <!-- section title -->
-                    <h2 class="section__title">Checkout</h2>
+                    <h2 class="section__title">Sepetim</h2>
                     <!-- end section title -->
 
                     <!-- breadcrumb -->
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb__item"><a href="{% url 'home' %}">Home</a></li>
-                        <li class="breadcrumb__item breadcrumb__item--active">Checkout</li>
+                    <ul class="breadcrumb" style="background: transparent;">
+                        <li class="breadcrumb__item"><a href="{% url 'home' %}">Ana Sayfa</a></li>
+                        <li class="breadcrumb__item breadcrumb__item--active">Sepetim</li>
                     </ul>
                     <!-- end breadcrumb -->
                 </div>
@@ -35,10 +35,11 @@
                         <table class="cart__table">
                             <thead>
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Title</th>
-                                    <th>Platform</th>
-                                    <th>Price</th>
+                                    <th>Oyun</th>
+                                    <th>İsmi</th>
+                                    <th>Geliştirici</th>
+                                    <th>Adet</th>
+                                    <th>Ücreti</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -48,12 +49,13 @@
                                 <tr>
                                     <td>
                                         <div class="cart__img">
-                                            <img src="img/cards/8.jpg" alt="">
+                                            <img src="{{ item.item.banner.url }}" alt="">
                                         </div>
                                     </td>
-                                    <td>{{ item }}</td>
-                                    <td>PC</td>
-                                    <td><span class="cart__price">$19.99</span></td>
+                                    <td>{{ item.item.name }}</td>
+                                    <td>{{ item.item.developer }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td><span class="cart__price">{{ item.calculate_row_price }} ₺</span></td>
                                     <td><button class="cart__delete" type="button"><svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><line x1='368' y1='368' x2='144' y2='144' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line><line x1='368' y1='144' x2='144' y2='368' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line></svg></button></td>
                                 </tr>
                                 {% endfor %}
@@ -63,8 +65,8 @@
 
                     <div class="cart__info">
                         <div class="cart__total">
-                            <p>Total:</p>
-                            <span>$27.98</span>
+                            <p>Toplam:</p>
+                            <span>{{ total_price }} ₺</span>
                         </div>
 
                         <div class="cart__systems">

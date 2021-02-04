@@ -67,7 +67,11 @@
                         </div>
 
                         <div class="card__actions">
-                            <button class="card__buy" type="button">Sepete Ekle</button>
+                            <button class="card__buy" type="button">
+                                <a href="{{ game.add_to_order_url }}">
+                                Sepete Ekle
+                                </a>
+                            </button>
 
                             <button class="card__favorite" type="button">
                                 <a href='{{ game.add_favourite_url }}'>
@@ -140,7 +144,11 @@
 				</div>
 
 				<div class="card__actions">
-					<button class="card__buy" type="button">Sepete Ekle</button>
+					<button class="card__buy" type="button">
+                        <a href="{{ game.add_to_order_url }}">
+                        Sepete Ekle
+                        </a>
+                    </button>
 
 					<button class="card__favorite" type="button">
                         <a href='{{ game.add_favourite_url }}'>

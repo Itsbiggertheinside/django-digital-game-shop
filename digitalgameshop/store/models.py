@@ -9,8 +9,6 @@ from .helpers import upload_media, STATUS_CHOICE
 
 # Create your models here.
 class Game(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='games')
-
     name = models.CharField(max_length=35)
     developer = models.CharField(max_length=55)
     description = models.TextField()
@@ -49,6 +47,9 @@ class Game(models.Model):
     def remove_favourite_url(self):
         return reverse('remove-favourite', kwargs={'id': self.id})
 
+    def add_to_order_url(self):
+        return reverse('add-to-order', kwargs={'id': self.id})
+
     def create_unique_slug(self):
         letter_fix = slugify(self.name.replace('ı', 'i'))
         random_char = uuid4().hex[:4]
@@ -63,5 +64,23 @@ class Game(models.Model):
         super().save(*args, **kwargs)
 
 
+class Order(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_completed = models.BooleanField(default=False)
+    date_ordered = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.owner}\'ın Sepeti'
 
 
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    item = models.ForeignKey(Game, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.order.owner}\'a ait {self.item.name} isimli oyundan {self.quantity} adet'
+
+    @property
+    def calculate_row_price(self):
+        return self.item.price * self.quantity

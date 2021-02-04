@@ -3,8 +3,8 @@ from django.http import JsonResponse
 from django.views.generic import View, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.db.models import F, Q, PositiveIntegerField, ExpressionWrapper, Count
-from .models import Game
+from django.db.models import Count, ExpressionWrapper, F, FloatField, PositiveIntegerField, Q, Sum
+from .models import Game, Order, OrderItem
 from .submodels import GameImage, Comment
 from .forms import CommentForm
 
@@ -15,15 +15,15 @@ class GameIndexView(View):
     def get(self, request, *args, **kwargs):
         game = Game.objects.all()
 
-        top_rated = game.select_related('user').prefetch_related('genres', 'languages', 'platforms').annotate(
+        top_rated = game.prefetch_related('genres', 'languages', 'platforms').annotate(
             rating= ExpressionWrapper(F('metascore') * Count('favourites'), output_field= PositiveIntegerField())
         ).order_by('-rating')[:5]
 
-        latest_released = game.select_related('user').prefetch_related('platforms').filter(
+        latest_released = game.prefetch_related('platforms').filter(
             status='ON_SALE'
         )[:10]
 
-        pre_ordered = game.select_related('user').prefetch_related('platforms').filter(
+        pre_ordered = game.prefetch_related('platforms').filter(
             status='PRE_ORDER'
         )[:10]
 
@@ -36,7 +36,7 @@ class GameIndexView(View):
 
 
 class GameDetailView(DetailView):
-    queryset = Game.objects.select_related('user').prefetch_related('genres', 'languages', 'platforms').all()
+    queryset = Game.objects.prefetch_related('genres', 'languages', 'platforms').all()
     template_name = 'store/detail.html'
     context_object_name = 'game'
 
@@ -50,6 +50,7 @@ class GameDetailView(DetailView):
 
         return context
 
+    @login_required
     def post(self, request, *args, **kwargs):
         form = CommentForm(request.POST or None)
 
@@ -67,24 +68,48 @@ class GameFavouritesView(LoginRequiredMixin, ListView):
     context_object_name = 'games'
 
     def get_queryset(self):
-        return Game.objects.select_related('user').prefetch_related('platforms').filter(
+        return Game.objects.prefetch_related('platforms').filter(
             favourites__id=self.request.user.id)
 
 
 class GameCatalogView(ListView):
-    queryset = Game.objects.select_related('user').prefetch_related('platforms').order_by('-created_at')
+    queryset = Game.objects.prefetch_related('platforms').order_by('-created_at')
     template_name = 'store/catalog.html'
     context_object_name = 'games'
 
 
+class CheckoutView(View):
+
+    def get(self, request, *args, **kwargs):
+        items = OrderItem.objects.select_related('order', 'item').filter(order__owner=self.request.user)
+        total_price = items.annotate(counted_price=ExpressionWrapper(
+            F('item__price') * F('quantity'), output_field= FloatField()
+            )).values('counted_price').aggregate(total=Sum('counted_price'))['total']
+        
+
+        context = { 'items': items, 'total_price': total_price, }
+        return render(request, 'store/checkout.html', context)
+
+# -------------------------------------------------------------------------------
+
+
 @login_required
-def add_favourite(request, id):
+def add_favourite(request, id=None):
     game = get_object_or_404(Game, id=id)
     game.favourites.add(request.user.id)
     return JsonResponse({'success': 'ok'}, status=200)
 
 @login_required
-def remove_favourite(request, id):
+def remove_favourite(request, id=None):
     game = get_object_or_404(Game, id=id)
     game.favourites.remove(request.user.id)
+    return JsonResponse({'success': 'ok'}, status=200)
+
+@login_required
+def add_to_order(request, id=None):
+    game = get_object_or_404(Game, id=id)
+    order, created = Order.objects.get_or_create(owner=request.user)
+    order_item, created = OrderItem.objects.get_or_create(order=order, item=game)
+    order_item.quantity += 1
+    order_item.save()
     return JsonResponse({'success': 'ok'}, status=200)
