@@ -11,6 +11,7 @@ from .views import (
     plus_quantity,
     less_quantity,
     remove_item,
+    contact,
     )
 
 urlpatterns = [
@@ -18,6 +19,7 @@ urlpatterns = [
     path('', GameIndexView.as_view(), name='home'),
     path('catalog/', GameCatalogView.as_view(), name='catalog'),
     path('game/detail/<slug:slug>/', GameDetailView.as_view(), name='detail'),
+    path('contact/', contact, name='contact'),
     
     path('favourites/', GameFavouritesView.as_view(), name='favourites'),
     path('game/favourite/add/<int:id>', add_favourite, name='add-favourite'),

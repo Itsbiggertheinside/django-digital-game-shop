@@ -54,15 +54,15 @@
                                     </td>
                                     <td>{{ item.item.name }}</td>
                                     <td>{{ item.item.developer }}</td>
-                                    <td><a href="{{ item.less_quantity_url }}" class="order-item-link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                    <td><a href="{{ item.less_quantity_url }}" class="order-item-link quantity"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
                                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                         </svg></a>
-                                        {{ item.quantity }} 
-                                        <a href="{{ item.plus_quantity_url }}" class="order-item-link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                        <span class="quantity-count">{{ item.quantity }}</span> 
+                                        <a href="{{ item.plus_quantity_url }}" class="order-item-link quantity"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                         </svg></a>
                                     </td>
-                                    <td><span class="cart__price">{{ item.calculate_row_price }} ₺</span></td>
+                                    <td><span class="cart__price">{{ item.item.price|floatformat:2 }} ₺</span></td>
                                     <td><button class="cart__delete" type="button">
                                         <a href="{{ item.remove_from_order_url }}" class="order-item-link" style="margin: 0 !important; padding: 0 important!;">
                                             <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewbox='0 0 512 512'><line x1='368' y1='368' x2='144' y2='144' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line><line x1='368' y1='144' x2='144' y2='368' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'></line></svg>
@@ -77,7 +77,7 @@
                     <div class="cart__info">
                         <div class="cart__total">
                             <p>Toplam:</p>
-                            <span>{{ total_price }} ₺</span>
+                            <span>{{ total_price|floatformat:2 }} ₺</span>
                         </div>
 
                         <div class="cart__systems">

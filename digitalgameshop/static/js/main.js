@@ -371,3 +371,94 @@ $(document).ready(function () {
 	}
 	$(window).on('load', initializeSlider());
 });
+
+
+$('.card__buy a').on('click', function(e) {
+	var _this = $(this);
+	e.preventDefault();
+
+	$.ajax({
+		url: $(this).attr('href'),
+		type: 'get',
+		success: function() {
+			swal('Sepete eklendi!', {timer:1000});
+			$(_this).closest('button').css('opacity', '.2');
+			$(_this).attr('href', '#');
+		}
+	});
+
+});
+$('.details__buy a').on('click', function(e) {
+	var _this = $(this);
+	e.preventDefault();
+
+	$.ajax({
+		url: $(this).attr('href'),
+		type: 'get',
+		success: function() {
+			swal('Sepete eklendi!', {button: false, timer:1000});
+			$(_this).closest('button').css('opacity', '.2');
+			$(_this).attr('href', '#');
+		}
+	});
+
+});
+$('.card__favorite a').on('click', function(e) {
+	var _this = $(this);
+	e.preventDefault();
+
+	$.ajax({
+		url: $(this).attr('href'),
+		type: 'get',
+		success: function(response) {
+			swal('Favoriler' + response.success, {timer:1000});
+			$(_this).closest('button').css('opacity', '.2');
+			$(_this).closest('.col-12.col-sm-6.col-md-4.col-xl-3').css('opacity', '.2');
+			$(_this).attr('href', '#');
+		}
+	});
+
+});
+$('.details__favorite a').on('click', function(e) {
+	var _this = $(this);
+	e.preventDefault();
+
+	$.ajax({
+		url: $(this).attr('href'),
+		type: 'get',
+		success: function(response) {
+			swal('Favoriler' + response.success, {button: false, timer:1000});
+			$(_this).closest('button').css('opacity', '.2');
+			$(_this).attr('href', '#');
+		}
+	});
+
+});
+$('.order-item-link.quantity').on('click', function(e) {
+	var _this = $(this);
+	e.preventDefault();
+
+	$.ajax({
+		url: $(this).attr('href'),
+		type: 'get',
+		success: function(response) {
+			$(_this).closest('td').find('.quantity-count').text(response.quantity);
+			$('.cart__total').load(location.href + ' .cart__total');
+		}
+	});
+
+});
+$('.cart__delete a').on('click', function(e) {
+	var _this = $(this);
+	e.preventDefault();
+
+	$.ajax({
+		url: $(this).attr('href'),
+		type: 'get',
+		success: function(response) {
+			$(_this).closest('tr').css('opacity', '.2');
+			$('.cart__total').load(location.href + ' .cart__total');
+		}
+	});
+
+});

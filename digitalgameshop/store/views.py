@@ -15,7 +15,9 @@ class GameIndexView(View):
     def get(self, request, *args, **kwargs):
         game = Game.objects.all()
 
-        top_rated = game.prefetch_related('genres', 'languages', 'platforms').annotate(
+        top_rated = game.prefetch_related('genres', 'languages', 'platforms').exclude(
+            status='PRE_ORDER'
+        ).annotate(
             rating= ExpressionWrapper(F('metascore') * Count('favourites'), output_field= PositiveIntegerField())
         ).order_by('-rating')[:5]
 
@@ -90,6 +92,10 @@ class CheckoutView(LoginRequiredMixin, View):
         context = { 'items': items, 'total_price': total_price, }
         return render(request, 'store/checkout.html', context)
 
+
+def contact(request):
+    return render(request, 'store/contacts.html')
+
 # -------------------------------------------------------------------------------
 
 
@@ -97,13 +103,13 @@ class CheckoutView(LoginRequiredMixin, View):
 def add_favourite(request, id=None):
     game = get_object_or_404(Game, id=id)
     game.favourites.add(request.user.id)
-    return JsonResponse({'success': 'ok'}, status=200)
+    return JsonResponse({'success': 'e eklendi'}, status=200)
 
 @login_required
 def remove_favourite(request, id=None):
     game = get_object_or_404(Game, id=id)
     game.favourites.remove(request.user.id)
-    return JsonResponse({'success': 'ok'}, status=200)
+    return JsonResponse({'success': 'den çıkartıldı'}, status=200)
 
 @login_required
 def add_to_order(request, id=None):
@@ -133,4 +139,3 @@ def remove_item(request, id=None):
     order_item = get_object_or_404(OrderItem, id=id)
     order_item.delete()
     return JsonResponse({'success': 'ok'}, status=200)
-    

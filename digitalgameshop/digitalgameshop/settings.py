@@ -47,12 +47,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 
-    'debug_toolbar',
+    # 'debug_toolbar',
 
     # 'game.apps.GameConfig',
     # 'user.apps.UserConfig',
     'store.apps.StoreConfig',
-    'blog.apps.BlogConfig',
+    # 'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
@@ -64,12 +64,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+# INTERNAL_IPS = [
+#     '127.0.0.1',
+# ]
 
 ROOT_URLCONF = 'digitalgameshop.urls'
 
@@ -88,6 +88,9 @@ TEMPLATES = [
                 # `allauth` needs this from django
                 'django.template.context_processors.request',
             ],
+            'libraries': {
+                'checkoutprice': 'store.templatetags.checkoutprice'
+            }
         },
     },
 ]
@@ -172,10 +175,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')

@@ -32,6 +32,10 @@ class Game(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True)
 
+    @property
+    def get_platforms(self):
+        return [platform.name for platform in self.platforms.all()]
+
     class Meta:
         ordering = ['-release_date']
 
@@ -80,10 +84,6 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f'{self.order.owner}\'a ait {self.item.name} isimli oyundan {self.quantity} adet'
-
-    @property
-    def calculate_row_price(self):
-        return self.item.price * self.quantity
 
     def plus_quantity_url(self):
         return reverse('plus-quantity', kwargs={'id': self.id})
